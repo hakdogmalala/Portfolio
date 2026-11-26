@@ -1,0 +1,2113 @@
+/* Mga custom na property: pangunahing palette ng kulay ng portfolio. */
+:root {
+    --ink: #202a2b;
+    --muted: #697574;
+    --blue: #b86f4e;
+    --blue-dark: #96563c;
+    --pale: #f6ece6;
+    --line: #e9e2d9;
+    --paper: #fffdf9;
+    --cream: #f7f3ed;
+}
+
+/* Pangkalahatang ayos: isinasama ang border at padding sa sukat ng mga elemento. */
+* {
+    box-sizing: border-box;
+}
+
+/* Maayos na pag-scroll at dagdag na puwang para hindi matakpan ng ulo ng pahina ang mga bahagi. */
+html {
+    scroll-behavior: smooth;
+}
+
+section[id] {
+    scroll-margin-top: 88px;
+}
+
+/* Madaling paggamit: nakatagong link na lumilitaw kapag pinindot ang Tab. */
+.skip-link {
+    position: fixed;
+    z-index: 100;
+    top: 12px;
+    left: 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    color: white;
+    background: var(--ink);
+    transform: translateY(-150%);
+    transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+/* Pangunahing estilo ng pahina: kulay, uri ng titik, at pag-iwas sa sobrang lapad. */
+body {
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    color: var(--ink);
+    background: var(--paper);
+    font-family: "DM Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.scroll-progress {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--blue);
+    pointer-events: none;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.skill-card.reveal,
+.certificate-card.reveal {
+    transition-delay: 80ms;
+}
+
+.form-status {
+    min-height: 20px;
+    margin: 0;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* Mga larawan at video: huwag hayaang lumampas sa lapad ng lalagyan. */
+img,
+video,
+canvas {
+    max-width: 100%;
+}
+
+/* Mga link at lalagyang nagsesentro sa nilalaman ng pahina. */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(1120px, calc(100% - 48px));
+    margin-inline: auto;
+}
+
+/* Ulo ng pahina na nananatili sa itaas habang nag-i-scroll. */
+.site-header {
+    position: sticky;
+    z-index: 50;
+    top: 0;
+    height: 88px;
+    border-bottom: 1px solid rgba(231, 234, 241, 0.8);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    transition: box-shadow 180ms ease;
+}
+
+/* Anino sa ulo ng pahina kapag nag-scroll pababa. */
+.site-header.scrolled {
+    box-shadow: 0 8px 28px rgba(23, 32, 54, 0.07);
+}
+
+/* Ayos ng pangunahing menu ng pahina. */
+.nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Pangalan at sagisag ng portfolio. */
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Manrope", sans-serif;
+    font-size: 21px;
+    font-weight: 800;
+}
+
+/* Bilog na sagisag na may unang titik ng pangalan. */
+.brand-mark {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: white;
+    background: var(--blue);
+    font-size: 18px;
+}
+
+/* Mga link sa pangunahing menu. */
+.nav-links {
+    display: flex;
+    gap: 34px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nav-links a {
+    position: relative;
+    padding: 34px 0 32px;
+}
+
+/* Hitsura ng link kapag tinutukan o kasalukuyang aktibo. */
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--blue);
+}
+
+/* Guhit sa ilalim ng kasalukuyang link sa menu. */
+.nav-links a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 22px;
+    height: 2px;
+    background: var(--blue);
+}
+
+/* Pindutan papunta sa bahagi ng pakikipag-ugnayan. */
+.nav-button {
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.nav-button:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+/* Mga kontrol ng menu sa cellphone na nakatago sa ayos para sa computer. */
+.menu-toggle,
+.mobile-contact {
+    display: none;
+}
+
+/* Kitang palibot ng piniling elemento para sa paggamit ng keyboard. */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid rgba(46, 102, 246, 0.28);
+    outline-offset: 4px;
+}
+
+/* Pambungad na bahagi: dalawang hanay para sa pagpapakilala at larawan. */
+.hero {
+    min-height: 620px;
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    align-items: center;
+    gap: 48px;
+    overflow: hidden;
+}
+
+/* Puwang sa paligid ng teksto sa pambungad na bahagi. */
+.hero-copy {
+    padding: 45px 0 55px;
+}
+
+/* Estilo ng maliliit na pamagat sa pambungad at iba pang bahagi. */
+.eyebrow,
+.section-label {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+/* Ayos ng katayuan at berdeng palatandaang bukas sa trabaho. */
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 24px;
+}
+
+/* Berdeng palatandaang bukas sa mga oportunidad sa trabaho. */
+.eyebrow span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #46b989;
+    box-shadow: 0 0 0 5px #eaf7f1;
+}
+
+/* Uri ng titik para sa mga pamagat. */
+h1,
+h2,
+h3 {
+    font-family: "Manrope", sans-serif;
+}
+
+/* Laki, pagitan, at anyo ng pangunahing pamagat. */
+h1 {
+    margin: 0;
+    font-size: clamp(48px, 6vw, 74px);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+}
+
+/* Kulay at estilo ng mga salitang binibigyang-diin sa pamagat. */
+h1 em,
+h2 em {
+    color: var(--blue);
+    font-family: Georgia, serif;
+    font-weight: 400;
+}
+
+/* Maikling pagpapakilala sa pambungad na bahagi. */
+.hero-text {
+    max-width: 520px;
+    margin: 26px 0 32px;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.75;
+}
+
+/* Lalagyan ng mga pindutan sa pambungad na bahagi. */
+.hero-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Pangkalahatang sukat at ayos ng mga pindutan. */
+.button {
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0 22px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Pangunahing pindutan para sa pinakamahalagang gawain. */
+.button-primary {
+    color: white;
+    background: var(--blue);
+    box-shadow: 0 12px 24px rgba(46, 102, 246, 0.18);
+}
+
+/* Kulay ng pangunahing pindutan kapag tinutukan. */
+.button-primary:hover {
+    background: var(--blue-dark);
+}
+
+/* Pangalawang pindutan at estilo kapag tinutukan. */
+.button-secondary {
+    border: 1px solid var(--line);
+}
+
+.button-secondary:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+/* Lalagyan ng larawan at mga palamuti sa paligid nito. */
+.portrait-wrap {
+    position: relative;
+    height: 540px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* Bilog na palamuti sa likod ng larawan. */
+.portrait-ring {
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    bottom: 38px;
+    border-radius: 50%;
+    background: #edf2ff;
+}
+
+/* Balangkas ng larawan sa profile. */
+.portrait {
+    position: relative;
+    z-index: 2;
+    width: 405px;
+    height: 505px;
+    overflow: hidden;
+    border-radius: 210px 210px 24px 24px;
+    /* I-tilt at palakihin ang portrait gamit ang values na itinatakda ng JavaScript. */
+    transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale(var(--portrait-scale, 1));
+    /* Dahan-dahang ilipat ang portrait at anino para hindi biglaan ang pagbabago. */
+    transition: transform 180ms ease, box-shadow 180ms ease;
+    /* Ipaalam sa browser na madalas magbabago ang transform property. */
+    will-change: transform;
+}
+
+/* Dagdagan nang kaunti ang laki at anino habang tinatapatan ng cursor. */
+.portrait.is-hovered {
+    /* Ginagamit ng transform sa itaas ang value na ito para sa scale effect. */
+    --portrait-scale: 1.025;
+    /* Magdagdag ng malambot na anino habang naka-hover ang cursor. */
+    box-shadow: 0 24px 48px rgba(23, 32, 54, 0.16);
+}
+
+/* Pagkasya at posisyon ng larawan sa loob ng balangkas. */
+.portrait img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: 50% 20%;
+}
+
+/* Kahon na nagpapakita ng degree sa ibabaw ng larawan. */
+.experience-card {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    bottom: 68px;
+    min-width: 158px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid rgba(231, 234, 241, 0.9);
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 16px 40px rgba(23, 32, 54, 0.12);
+}
+
+/* Pagbibigay-diin sa pinaikling pangalan ng degree. */
+.experience-card strong {
+    font-family: "Manrope", sans-serif;
+    font-size: 30px;
+    color: var(--blue);
+}
+
+/* Teksto ng degree sa loob ng kahon ng karanasan. */
+.experience-card span {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+/* Bahaging Tungkol sa akin at dalawang hanay ng nilalaman nito. */
+.about-section {
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+/* Puwang at lapad ng mga hanay sa bahaging Tungkol sa akin. */
+.about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 90px;
+    padding: 96px 0;
+}
+
+/* Mga pamagat sa bahaging Tungkol sa akin, Kasanayan, at Mga proyekto. */
+.about-grid h2,
+.section-heading h2 {
+    margin: 12px 0 0;
+    font-size: 44px;
+    line-height: 1.14;
+    letter-spacing: -0.035em;
+}
+
+/* Karagdagang puwang sa teksto ng bahaging Tungkol sa akin. */
+.about-copy {
+    padding-top: 6px;
+}
+
+/* Mga talata sa bahaging Tungkol sa akin. */
+.about-copy p {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+/* Bahaging Kasanayan at puwang sa itaas at ibaba nito. */
+.skills-section {
+    padding: 100px 0 110px;
+}
+
+/* Ayos ng pamagat at maikling paliwanag ng bawat bahagi. */
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 38px;
+}
+
+/* Maikling paliwanag sa tabi ng pamagat ng bahagi. */
+.section-heading > p {
+    max-width: 320px;
+    margin: 0 0 5px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* Hanay-hanay na ayos ng mga kahon ng kasanayan. */
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+}
+
+/* Bawat kahon ng kasanayan at galaw nito kapag tinutukan. */
+.skill-card {
+    min-height: 180px;
+    padding: 28px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    transition: 180ms ease;
+}
+
+.skill-icon {
+    width: 44px;
+    height: 44px;
+    display: block;
+    fill: #5f6b7a;
+}
+
+.html-icon {
+    fill: #e44d26;
+}
+
+.css-icon {
+    fill: #264de4;
+}
+
+.javascript-icon rect {
+    fill: #f7df1e;
+}
+
+.javascript-icon path {
+    fill: #2e3035;
+}
+
+/* Kulay ng mga icon para sa PHP, MySQL, at GitHub skill card. */
+.php-icon ellipse {
+    fill: #777bb4;
+}
+
+.mysql-icon {
+    fill: #00758f;
+    color: #00758f;
+}
+
+.github-icon {
+    fill: #24292f;
+}
+
+.react-icon {
+    fill: none;
+    stroke: #61dafb;
+    stroke-width: 1.2;
+}
+
+.react-icon circle {
+    fill: #61dafb;
+    stroke: none;
+}
+
+.typescript-icon rect {
+    fill: #3178c6;
+}
+
+.typescript-icon path {
+    fill: #ffffff;
+}
+
+.node-icon {
+    fill: #3c873a;
+}
+
+.skill-card:hover {
+    transform: translateY(-4px);
+    border-color: #cbd8ff;
+    background: #f8faff;
+    box-shadow: 0 14px 30px rgba(23, 32, 54, 0.06);
+}
+
+/* Pangalan at paliwanag ng kasanayan. */
+.skill-card h3 {
+    margin: 8px 0;
+    font-size: 20px;
+}
+
+.skill-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Bahaging sertipiko at grid ng mga nakamit. */
+.certificates-section {
+    padding: 100px 0 110px;
+    background: #f3efe8;
+}
+
+/* Pantay na dalawang column para sa certificate cards; nagiging isang column sa maliit na screen. */
+.certificate-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 860px;
+    margin-inline: auto;
+}
+
+.certificate-card {
+    min-height: 170px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fffdf9;
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.certificate-card:hover {
+    transform: translateY(-5px);
+    border-color: #dfc5b5;
+    box-shadow: 0 16px 34px rgba(58, 46, 37, 0.09);
+}
+
+.certificate-icon {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--pale);
+    color: var(--blue);
+}
+
+.certificate-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+.certificate-year {
+    color: #a2735d;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.certificate-card h3 {
+    margin: 8px 0 6px;
+    font-size: 20px;
+}
+
+/* Ipakita nang banayad ang issuer at petsa sa ilalim ng pamagat ng certificate. */
+.certificate-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Gallery cards: nakaayos ang preview at label sa iisang column. */
+.certificate-gallery-item {
+    display: block;
+    min-height: 0;
+    padding: 12px;
+}
+
+/* Button na bumubuo sa clickable thumbnail ng certificate. */
+.certificate-preview {
+    position: relative;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: white;
+    cursor: zoom-in;
+}
+
+/* Panatilihin ang buong thumbnail sa pare-parehong aspect ratio. */
+.certificate-preview img {
+    width: 100%;
+    aspect-ratio: 1.4;
+    display: block;
+    object-fit: contain;
+    transition: transform 220ms ease;
+}
+
+/* Bahagyang palakihin ang thumbnail kapag naka-hover o naka-focus sa keyboard. */
+.certificate-preview:hover img,
+.certificate-preview:focus-visible img {
+    transform: scale(1.035);
+}
+
+/* Overlay label na nagpapahiwatig na puwedeng buksan ang thumbnail. */
+.certificate-preview-label {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    color: white;
+    background: rgba(32, 42, 43, 0.84);
+    font-size: 12px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+/* Ipakita ang overlay kapag naka-hover o naka-focus ang thumbnail. */
+.certificate-preview:hover .certificate-preview-label,
+.certificate-preview:focus-visible .certificate-preview-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Ayusin ang pangalan sa ilalim ng bawat certificate thumbnail. */
+.certificate-gallery-item h3 {
+    margin: 14px 4px 2px;
+}
+
+/* Dialog para sa malaking larawan ng napiling certificate. */
+.certificate-preview-dialog {
+    width: min(1100px, calc(100% - 32px));
+    max-width: none;
+    max-height: calc(100dvh - 32px);
+    padding: 16px;
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--paper);
+    box-shadow: 0 28px 90px rgba(32, 42, 43, 0.28);
+}
+
+/* Dim backdrop sa likod ng enlarged certificate preview. */
+.certificate-preview-dialog::backdrop {
+    background: rgba(25, 32, 32, 0.72);
+    backdrop-filter: blur(4px);
+}
+
+/* Pahalang na ayos ng pamagat at close button sa preview dialog. */
+.certificate-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+/* Pamagat sa header ng enlarged preview. */
+.certificate-preview-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* Panatilihin ang buong certificate image sa loob ng preview dialog. */
+.certificate-preview-dialog > img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Bahagi ng pakikipag-ugnayan at nakasentrong nilalaman nito. */
+.contact-section {
+    padding: 110px 0;
+    text-align: center;
+    color: white;
+    background: var(--blue);
+}
+
+/* Kulay ng maliit na pamagat sa bahagi ng pakikipag-ugnayan. */
+.contact-inner .section-label {
+    color: #bfd0ff;
+}
+
+/* Pangunahing mensahe sa bahagi ng pakikipag-ugnayan. */
+.contact-inner h2 {
+    margin: 18px 0 32px;
+    font-size: 52px;
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+}
+
+/* Bahaging binibigyang-diin sa mensahe ng pakikipag-ugnayan. */
+.contact-inner h2 em {
+    color: white;
+}
+
+/* Maliwanag na pindutan sa bahagi ng pakikipag-ugnayan. */
+.button-light {
+    color: var(--ink);
+    background: white;
+}
+
+/* Anyo ng maliwanag na pindutan kapag tinutukan. */
+.button-light:hover {
+    background: #edf3ff;
+}
+
+.contact-form {
+    width: min(100%, 620px);
+    display: grid;
+    gap: 18px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.contact-form label {
+    display: grid;
+    gap: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    font: inherit;
+    transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+
+.contact-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.contact-form button {
+    justify-self: center;
+    margin-top: 4px;
+}
+
+/* Guhit na naghihiwalay sa pahina at ibabang bahagi. */
+footer {
+    border-top: 1px solid var(--line);
+}
+
+/* Pahalang na ayos ng mga elemento sa ibabang bahagi. */
+.footer-inner {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Laki ng sagisag sa ibabang bahagi. */
+.footer-brand {
+    font-size: 18px;
+}
+
+/* Sukat ng sagisag sa ibabang bahagi. */
+.footer-brand .brand-mark {
+    width: 34px;
+    height: 34px;
+}
+
+/* Kulay at laki ng copyright at link pabalik sa itaas. */
+.footer-inner p,
+.footer-inner > a:last-child {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* Tablet at maliit na computer: bawasan ang pagitan at laki ng larawan. */
+@media (max-width: 900px) {
+    .nav {
+        gap: 20px;
+    }
+
+    .nav-links {
+        gap: 20px;
+    }
+
+    .hero {
+        grid-template-columns: 1fr 0.82fr;
+        gap: 20px;
+    }
+
+    .portrait-ring {
+        width: 340px;
+        height: 340px;
+    }
+
+    .portrait {
+        width: 320px;
+    }
+
+    .experience-card {
+        left: -10px;
+    }
+
+    .about-grid {
+        gap: 40px;
+    }
+}
+
+/* Cellphone: ayusin ang menu, pambungad, at mga hanay para sa makitid na screen. */
+@media (max-width: 720px) {
+    .container {
+        width: min(100% - 32px, 1120px);
+    }
+
+    .site-header {
+        height: 72px;
+    }
+
+    section[id] {
+        scroll-margin-top: 72px;
+    }
+
+    .nav-button {
+        display: none;
+    }
+
+    .menu-toggle {
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-content: center;
+        gap: 5px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: white;
+        cursor: pointer;
+    }
+
+    .menu-toggle span {
+        width: 18px;
+        height: 2px;
+        display: block;
+        border-radius: 2px;
+        background: var(--ink);
+        transition: 180ms ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-links {
+        position: absolute;
+        z-index: 60;
+        top: 72px;
+        left: 16px;
+        right: 16px;
+        display: grid;
+        gap: 0;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 18px 50px rgba(23, 32, 54, 0.14);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: 180ms ease;
+    }
+
+    .nav-links.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-links a {
+        padding: 14px 12px;
+        border-radius: 6px;
+    }
+
+    .nav-links a.active {
+        background: var(--pale);
+    }
+
+    .nav-links a.active::after {
+        display: none;
+    }
+
+    .mobile-contact {
+        display: block;
+        margin-top: 6px;
+        color: white;
+        background: var(--blue);
+        text-align: center;
+    }
+
+    .menu-open {
+        overflow: hidden;
+    }
+
+    .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 0;
+        text-align: center;
+        padding-top: 45px;
+    }
+
+    .hero-copy {
+        padding-bottom: 10px;
+    }
+
+    .eyebrow,
+    .hero-actions {
+        justify-content: center;
+    }
+
+    /* Isentro ang teksto ng pagpapakilala sa makitid na screen. */
+    .hero-text {
+        margin-inline: auto;
+    }
+
+    .portrait-wrap {
+        height: 470px;
+    }
+
+    .portrait-ring {
+        width: 360px;
+        height: 360px;
+        bottom: 28px;
+    }
+
+    .portrait {
+        width: 345px;
+        height: 445px;
+    }
+
+    .experience-card {
+        left: 50%;
+        bottom: 42px;
+        transform: translateX(-150%);
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-grid {
+        gap: 30px;
+        padding: 70px 0;
+    }
+
+    .about-grid h2,
+    .section-heading h2 {
+        font-size: 36px;
+    }
+
+    .skills-section {
+        padding: 75px 0;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .skill-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .certificate-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-inner h2 {
+        font-size: 40px;
+    }
+
+    .footer-inner {
+        height: 120px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .footer-inner p {
+        order: 3;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+}
+
+/* Maliit na cellphone: paliitin ang pamagat, larawan, at mga halimbawa ng proyekto. */
+@media (max-width: 460px) {
+    .brand {
+        font-size: 18px;
+    }
+
+    /* Mas malambot na kulay at hugis ng logo. */
+    .brand-mark {
+        width: 34px;
+        height: 34px;
+    }
+
+    /* Laki at espasyo ng pangunahing pamagat sa iba-ibang lapad ng screen. */
+    h1 {
+        font-size: 44px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .portrait-wrap {
+        height: 420px;
+    }
+
+    .portrait-ring {
+        width: 300px;
+        height: 300px;
+    }
+
+    .portrait {
+        width: 290px;
+        height: 390px;
+    }
+
+    .experience-card {
+        transform: translateX(-118%);
+    }
+
+    .skill-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certificate-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-inner h2 {
+        font-size: 34px;
+    }
+}
+
+/* Karagdagang ayos: banayad na pabilog na paglipat ng kulay sa likuran. */
+body {
+    background:
+        radial-gradient(ellipse at 86% 9%, rgba(246, 236, 230, 0.55), transparent 28rem),
+        var(--paper);
+}
+
+/* Bagong kulay at bahagyang paglabo ng ulo ng pahina. */
+.site-header {
+    border-bottom-color: rgba(233, 226, 217, 0.75);
+    background: rgba(255, 253, 249, 0.88);
+}
+
+/* Kulay, hugis, at anino ng sagisag sa pangalan. */
+.brand-mark {
+    border-radius: 12px;
+    background: linear-gradient(145deg, #c98562, #a75e40);
+    box-shadow: 0 6px 14px rgba(184, 111, 78, 0.2);
+}
+
+/* Bilugang menu at mga link na aktibo o tinutukan. */
+.nav-links {
+    gap: 8px;
+    padding: 5px;
+    border: 1px solid rgba(233, 226, 217, 0.72);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+}
+
+.nav-links a {
+    padding: 11px 15px;
+    border-radius: 999px;
+    transition: color 180ms ease, background 180ms ease;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--blue-dark);
+    background: var(--pale);
+}
+
+.nav-links a.active::after {
+    display: none;
+}
+
+/* Bilugang pindutan ng paanyaya para bumagay sa bagong disenyo. */
+.nav-button {
+    border-radius: 999px;
+    transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.nav-button:hover {
+    border-color: var(--blue);
+    background: var(--pale);
+}
+
+/* Ayos ng pambungad na bahagi at palamuti sa likuran nito. */
+.hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 650px;
+}
+
+/* Bilog na palamuting nasa likod ng larawan sa pambungad. */
+.hero::before {
+    position: absolute;
+    z-index: -1;
+    top: 50px;
+    right: -30px;
+    width: min(52vw, 600px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(184, 111, 78, 0.12);
+    border-radius: 50%;
+    background: radial-gradient(circle at 54% 46%, rgba(246, 236, 230, 0.9), rgba(246, 236, 230, 0.24) 62%, transparent 63%);
+    content: "";
+}
+
+/* Palatandaang bukas sa trabaho sa pambungad na bahagi. */
+.eyebrow {
+    width: fit-content;
+    padding: 9px 14px;
+    border: 1px solid #e8eee8;
+    border-radius: 999px;
+    background: #fbfdf9;
+    color: #64746b;
+    letter-spacing: 0.1em;
+}
+
+.eyebrow span {
+    box-shadow: 0 0 0 5px #eaf5ec;
+}
+
+h1 {
+    font-size: clamp(48px, 5.9vw, 72px);
+    letter-spacing: -0.055em;
+}
+
+/* Kulay ng mga salitang binibigyang-diin sa mga pamagat. */
+h1 em,
+h2 em {
+    color: var(--blue);
+}
+
+/* Limitahan ang lapad ng teksto ng pagpapakilala. */
+.hero-text {
+    max-width: 485px;
+    font-size: 17px;
+}
+
+/* Mas bilugan at maayos ang galaw ng lahat ng pindutan. */
+.button {
+    border-radius: 999px;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+}
+
+/* Unti-unting paglipat ng kulay at epekto kapag tinutukan ang pangunahing pindutan. */
+.button-primary {
+    background: linear-gradient(135deg, #c47b58, #a75e40);
+    box-shadow: 0 10px 24px rgba(164, 92, 61, 0.22);
+}
+
+.button-primary:hover {
+    background: linear-gradient(135deg, #b66c4b, #96563c);
+    box-shadow: 0 14px 28px rgba(164, 92, 61, 0.26);
+}
+
+/* Banayad na likuran ng pangalawang pindutan. */
+.button-secondary {
+    background: rgba(255, 255, 255, 0.68);
+}
+
+/* Pinahusay na taas at posisyon ng larawan sa profile. */
+.portrait-wrap {
+    height: 560px;
+}
+
+/* Guhit, anino, at kulay ng palamuti sa likod ng larawan. */
+.portrait-ring {
+    width: 440px;
+    height: 440px;
+    bottom: 34px;
+    background: #f0e2d7;
+}
+
+/* Mas pulidong balangkas at anino ng larawan sa profile. */
+.portrait {
+    width: 410px;
+    height: 510px;
+    border: 8px solid rgba(255, 253, 249, 0.84);
+    border-radius: 230px 230px 30px 30px;
+    box-shadow: 0 24px 60px rgba(58, 46, 37, 0.12);
+}
+
+/* Mas malinis na kahon ng impormasyon sa larawan. */
+.experience-card {
+    left: -12px;
+    border-color: rgba(233, 226, 217, 0.8);
+    border-radius: 14px;
+    box-shadow: 0 18px 42px rgba(58, 46, 37, 0.14);
+}
+
+.experience-card strong {
+    color: var(--blue);
+}
+
+/* Mas malambot na kulay at puwang sa bahaging Tungkol sa akin. */
+.about-section {
+    background: linear-gradient(180deg, #f8f4ee, #f5f0e8);
+    border-color: var(--line);
+}
+
+.about-grid {
+    gap: 100px;
+    padding: 106px 0;
+}
+
+/* Pinahusay na mga pamagat sa bahaging Tungkol sa akin at iba pang bahagi. */
+.about-grid h2,
+.section-heading h2 {
+    font-size: clamp(36px, 4vw, 46px);
+}
+
+.section-label {
+    letter-spacing: 0.12em;
+}
+
+/* Mas maluwag na bahagi ng Kasanayan at hanay ng mga kahon nito. */
+.skills-section {
+    padding-top: 110px;
+    padding-bottom: 120px;
+}
+
+.skill-grid {
+    gap: 16px;
+    border: 0;
+}
+
+/* Bilugang kahon ng kasanayan at galaw kapag tinutukan. */
+.skill-card {
+    min-height: 194px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(145deg, #fffefa, #faf7f1);
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    border-color: #dfc5b5;
+    background: #fffdf9;
+    box-shadow: 0 16px 34px rgba(58, 46, 37, 0.09);
+}
+
+.skill-card h3 {
+    margin-top: 8px;
+}
+
+/* Unti-unting paglipat ng kulay at bilog na palamuti sa pakikipag-ugnayan. */
+.contact-section {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 8% 100%, rgba(255, 255, 255, 0.14), transparent 32rem),
+        linear-gradient(135deg, #b86f4e, #a45f43);
+}
+
+/* Mga bilog na palamuti sa bahagi ng pakikipag-ugnayan. */
+.contact-section::before,
+.contact-section::after {
+    position: absolute;
+    width: 330px;
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+}
+
+/* Puwesto ng palamuti sa kanang itaas. */
+.contact-section::before {
+    top: -220px;
+    right: -60px;
+}
+
+/* Puwesto ng palamuti sa kaliwang ibaba. */
+.contact-section::after {
+    bottom: -270px;
+    left: -80px;
+    width: 420px;
+}
+
+/* Ilagay sa ibabaw ng palamuti sa likuran ang impormasyon sa pakikipag-ugnayan. */
+.contact-inner {
+    position: relative;
+}
+
+/* Banayad na guhit at anino ng pindutan sa pakikipag-ugnayan. */
+.button-light {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 30px rgba(75, 43, 30, 0.16);
+}
+
+.button-light:hover {
+    background: #f8eee7;
+}
+
+.hero-actions {
+    flex-wrap: wrap;
+}
+
+/* Kulay at hugis ng ibabang bahagi at pindutan ng menu sa cellphone. */
+footer {
+    border-color: var(--line);
+    background: var(--paper);
+}
+
+.footer-brand .brand-mark {
+    border-radius: 10px;
+}
+
+.menu-toggle {
+    border-radius: 12px;
+    background: var(--paper);
+}
+
+/* Tablet: ayusin ang menu, pambungad, larawan, at bahaging Tungkol sa akin. */
+@media (max-width: 900px) {
+    .nav-links {
+        gap: 2px;
+    }
+
+    .nav-links a {
+        padding-inline: 10px;
+    }
+
+    .hero {
+        min-height: 590px;
+    }
+
+    .portrait-ring {
+        width: 340px;
+        height: 340px;
+    }
+
+    .portrait {
+        width: 320px;
+        height: 470px;
+    }
+
+    .about-grid {
+        gap: 52px;
+    }
+}
+
+/* Cellphone: ayusin ang pambungad, mga kahon, pindutan, at pagitan ng menu. */
+@media (max-width: 720px) {
+    .hero {
+        padding-top: 54px;
+    }
+
+    .hero::before {
+        top: auto;
+        right: 50%;
+        bottom: 0;
+        width: min(94vw, 430px);
+        transform: translateX(50%);
+    }
+
+    /* Iangkop ang laki ng pangunahing pamagat sa lapad ng screen. */
+    .eyebrow {
+        margin-inline: auto;
+    }
+
+    .portrait-wrap {
+        height: 470px;
+    }
+
+    .portrait-ring {
+        width: 360px;
+        height: 360px;
+    }
+
+    .portrait {
+        width: 345px;
+        height: 445px;
+    }
+
+    .about-grid {
+        padding: 76px 0;
+    }
+
+    .skills-section {
+        padding-top: 82px;
+        padding-bottom: 88px;
+    }
+
+    .certificates-section {
+        padding-top: 82px;
+        padding-bottom: 88px;
+    }
+
+    .skill-card {
+        min-height: 170px;
+        padding: 22px;
+    }
+
+    .skill-card h3 {
+        margin-top: 8px;
+    }
+
+    .contact-section {
+        padding: 88px 0;
+    }
+
+    .nav-links {
+        gap: 0;
+        padding: 8px;
+        border-radius: 16px;
+        background: var(--paper);
+    }
+
+    .nav-links a {
+        padding: 14px 12px;
+        border-radius: 9px;
+    }
+}
+
+/* Maliit na cellphone: paliitin ang pamagat, larawan, mga kahon, at ibabang bahagi. */
+@media (max-width: 460px) {
+    .hero {
+        padding-top: 42px;
+    }
+
+    /* Iangkop ang laki ng pamagat sa lapad ng cellphone. */
+    h1 {
+        font-size: clamp(34px, 10.5vw, 44px);
+    }
+
+    .hero-text {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .portrait-wrap {
+        height: 420px;
+    }
+
+    .portrait-ring {
+        width: min(82vw, 310px);
+        height: min(82vw, 310px);
+    }
+
+    .portrait {
+        width: min(79vw, 290px);
+        height: 390px;
+    }
+
+    .experience-card {
+        left: 50%;
+        transform: translateX(-125%);
+    }
+
+    .skill-grid {
+        gap: 12px;
+    }
+
+    .skill-card {
+        min-height: 158px;
+    }
+
+    .certificate-card {
+        min-height: 0;
+        padding: 22px;
+    }
+
+
+    .contact-inner h2 {
+        font-size: clamp(31px, 8.5vw, 36px);
+    }
+
+    .footer-inner {
+        padding: 14px 0;
+    }
+}
+
+/* Madaling paggamit: bawasan ang galaw kapag pinili ng bisita ang kaunting animasyon. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+/* Mga detalye sa pakikipag-ugnayan: napipindot na email at numero ng telepono. */
+.contact-details {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 30px;
+    margin-top: 30px;
+}
+
+.contact-details a {
+    display: grid;
+    gap: 4px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    color: white;
+    text-align: left;
+    transition: background 180ms ease, border-color 180ms ease;
+}
+
+.contact-details a:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-details span {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.contact-details strong {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Cellphone: ilagay nang patayo ang mga link ng email at telepono. */
+@media (max-width: 460px) {
+    .contact-details {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .contact-details a {
+        text-align: center;
+        overflow-wrap: anywhere;
+    }
+}
+
+/* Modal para sa pagtingin sa resume PDF. */
+.resume-dialog {
+    width: min(900px, calc(100% - 32px));
+    height: min(88vh, 900px);
+    max-height: calc(100dvh - 24px);
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    color: var(--ink);
+    background: var(--paper);
+    box-shadow: 0 28px 90px rgba(32, 42, 43, 0.28);
+}
+
+/* Madilim at bahagyang malabong likuran ng modal. */
+.resume-dialog::backdrop {
+    background: rgba(25, 32, 32, 0.68);
+    backdrop-filter: blur(4px);
+}
+
+/* Pamagat, download, at close button sa itaas ng preview. */
+.resume-dialog-header {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 18px 12px 24px;
+    border-bottom: 1px solid var(--line);
+}
+
+.resume-dialog-header h2 {
+    margin: 0;
+    font-size: 19px;
+}
+
+/* Mga button sa itaas ng preview. */
+.resume-dialog-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.resume-dialog-actions .button {
+    height: 42px;
+    padding: 0 16px;
+    font-size: 13px;
+}
+
+/* Button para isara ang preview. */
+.resume-dialog-close {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.resume-dialog-close:hover {
+    background: var(--pale);
+}
+
+/* PDF viewer na nagpapakita ng resume sa loob ng modal. */
+.resume-dialog iframe {
+    width: 100%;
+    height: calc(100% - 76px);
+    display: block;
+    border: 0;
+    background: white;
+}
+
+/* Resume preview sa About section, kasunod ng pagpapakilala. */
+.resume-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+}
+
+.resume-cta p {
+    margin: 0;
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.resume-cta .button {
+    height: 46px;
+    flex-shrink: 0;
+    padding-inline: 18px;
+}
+
+/* Cellphone: palakihin ang preview at siksikin ang mga kontrol. */
+@media (max-width: 520px) {
+    .resume-cta {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .resume-dialog {
+        width: calc(100% - 16px);
+        height: calc(100dvh - 16px);
+        max-height: none;
+        border-radius: 12px;
+    }
+
+    .resume-dialog-header {
+        min-height: 68px;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .resume-dialog-header h2 {
+        font-size: 16px;
+    }
+
+    .resume-dialog-actions {
+        gap: 8px;
+    }
+
+    .resume-dialog-actions .button {
+        height: 40px;
+        padding: 0 12px;
+    }
+
+    .resume-dialog-close {
+        width: 40px;
+        height: 40px;
+    }
+
+    .resume-dialog iframe {
+        height: calc(100% - 68px);
+    }
+}
+
+/* Makabagong contact layout: impormasyon sa isang panig, form sa kabila. */
+.contact-section {
+    padding: clamp(76px, 9vw, 120px) 0;
+    text-align: left;
+    background:
+        radial-gradient(ellipse at 7% 90%, rgba(255, 255, 255, 0.13), transparent 30rem),
+        linear-gradient(135deg, #a95f42, #c17a56);
+}
+
+.contact-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(36px, 7vw, 88px);
+}
+
+/* Ihiwalay at bigyang-diin ang pambungad na mensahe sa contact section. */
+.contact-copy .section-label {
+    color: #f3d9ca;
+}
+
+.contact-copy h2 {
+    max-width: 500px;
+    margin: 18px 0;
+    font-size: clamp(38px, 4.2vw, 58px);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+}
+
+.contact-copy h2 em {
+    color: #f4d5c2;
+}
+
+.contact-intro {
+    max-width: 420px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+/* Mga contact link na nakaayos bilang madaling basahing cards. */
+.contact-copy .contact-details {
+    display: grid;
+    justify-content: stretch;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.contact-copy .contact-details a {
+    width: fit-content;
+    min-width: min(100%, 290px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.contact-copy .contact-details a:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* Malinis at mataas ang contrast na panel para sa contact form. */
+.contact-form {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0;
+    padding: clamp(22px, 3.5vw, 36px);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 22px;
+    color: var(--ink);
+    background: var(--paper);
+    box-shadow: 0 24px 60px rgba(67, 39, 27, 0.2);
+}
+
+.contact-form label {
+    color: var(--ink);
+    font-size: 13px;
+}
+
+/* Ibigay sa mensahe ang buong lapad ng form. */
+.contact-form label:nth-of-type(3) {
+    grid-column: 1 / -1;
+}
+
+.contact-form input,
+.contact-form textarea {
+    border-color: #e4d9ce;
+    border-radius: 10px;
+    color: var(--ink);
+    background: #fff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #8c928e;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: var(--blue);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(184, 111, 78, 0.16);
+}
+
+.contact-form button {
+    justify-self: start;
+    margin-top: 0;
+}
+
+/* Panatilihing mababasa ang status message sa maliwanag na form panel. */
+.contact-form .form-status {
+    grid-column: 1 / -1;
+    color: var(--muted);
+    text-align: left;
+}
+
+/* Maliit na paliwanag kung paano ipapadala ang mensahe mula sa form. */
+.contact-form-note {
+    grid-column: 1 / -1;
+    margin: -4px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Itago ang honeypot field sa tao pero iwan itong kasama sa form submission. */
+.form-honeypot {
+    display: none;
+}
+
+.contact-form button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+/* Tablet at cellphone: ilagay sa ibabaw ng form ang contact information. */
+@media (max-width: 900px) {
+    .contact-inner {
+        max-width: 720px;
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+    .contact-copy h2 {
+        max-width: 620px;
+    }
+
+    .contact-copy .contact-details {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .contact-copy .contact-details a {
+        min-width: 0;
+        width: 100%;
+    }
+}
+
+/* Makitid na screen: gawing isang column ang mga field at contact links. */
+@media (max-width: 560px) {
+    .contact-inner {
+        gap: 28px;
+    }
+
+    .contact-copy h2 {
+        font-size: clamp(36px, 10vw, 46px);
+    }
+
+    .contact-copy .contact-details {
+        grid-template-columns: 1fr;
+        margin-top: 22px;
+    }
+
+    .contact-form {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    .contact-form label:nth-of-type(3),
+    .contact-form .form-status {
+        grid-column: auto;
+    }
+
+    .contact-form button {
+        width: 100%;
+    }
+}
+
+/* Ipares ang icon at label sa Contact heading. */
+.contact-section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.contact-heading-icon {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+}
+
+/* Iayos ang email, telepono, at LinkedIn icon sa tabi ng kani-kanilang detalye. */
+.contact-copy .contact-details a {
+    grid-template-columns: 22px minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: center;
+}
+
+.contact-link-icon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 19px;
+    height: 19px;
+    align-self: center;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.6;
+}
+
+.contact-copy .contact-details a > span {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.contact-copy .contact-details a > strong {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* Panatilihin ang malinaw na LinkedIn mark sa loob ng outline icon. */
+.linkedin-icon circle {
+    fill: currentColor;
+    stroke: none;
+}
+
+/* Compact tech chips para makita agad ang pangunahing tools sa Home section. */
+.hero-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Bilugang label para sa bawat teknolohiya sa Home section. */
+.hero-tech-list li {
+    padding: 7px 12px;
+    border: 1px solid rgba(184, 111, 78, 0.18);
+    border-radius: 999px;
+    color: var(--blue-dark);
+    background: rgba(246, 236, 230, 0.72);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Scroll cue na nagdadala sa About section kapag pinindot. */
+.scroll-cue {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+/* Bilog na lalagyan ng arrow para mapansin ang scroll link. */
+.scroll-cue-icon {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--blue-dark);
+    background: var(--paper);
+    font-size: 16px;
+    transition: transform 180ms ease, border-color 180ms ease;
+}
+
+/* Igalaw nang bahagya ang arrow kapag tinutukan ang scroll link. */
+.scroll-cue:hover .scroll-cue-icon {
+    transform: translateY(3px);
+    border-color: var(--blue);
+}
+
+/* Sa cellphone, ihanay sa gitna ang chips at scroll cue kasabay ng hero text. */
+@media (max-width: 720px) {
+    .hero-tech-list,
+    .scroll-cue {
+        justify-content: center;
+        margin-inline: auto;
+    }
+}
