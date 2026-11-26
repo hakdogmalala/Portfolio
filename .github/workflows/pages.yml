@@ -8,25 +8,18 @@ on:
       - main
   workflow_dispatch:
 
-# Grant only the access needed to read the repo and publish Pages.
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 # Cancel an older deployment if a newer one starts.
 concurrency:
   group: pages
   cancel-in-progress: true
 
-# Package and publish the static portfolio.
+# Package the site first, then deploy after the upload job completes.
 jobs:
-  deploy:
-    environment:
-      # Use the standard Pages environment and expose its site URL in Actions.
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    # Run the deployment steps on a GitHub-hosted Linux runner.
+  build:
+    # Grant access to read the repository and configure GitHub Pages.
+    permissions:
+      contents: read
+      pages: write
     runs-on: ubuntu-latest
     steps:
       # Check out the repository files for packaging.
@@ -39,12 +32,25 @@ jobs:
         with:
           enablement: true
 
-      # Package the static files from the repository root as the Pages artifact.
+      # Upload the site in this job so the artifact is ready before deployment starts.
       - name: Upload site
         uses: actions/upload-pages-artifact@v5
         with:
           path: .
 
+  deploy:
+    # Start deployment only after the uploaded artifact is available.
+    needs: build
+    # Grant only the access needed to publish to Pages and request an OIDC token.
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      # Use the standard Pages environment and expose its site URL in Actions.
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       # Publish the artifact to GitHub Pages.
       - name: Deploy to GitHub Pages
         id: deployment
