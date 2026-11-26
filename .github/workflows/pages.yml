@@ -1,40 +1,57 @@
+# Name shown for this workflow in the Actions tab.
 name: Deploy portfolio to GitHub Pages
 
+# Deploy automatically when main changes, or on a manual request.
 on:
   push:
     branches:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
+# Cancel an older deployment if a newer one starts.
 concurrency:
   group: pages
   cancel-in-progress: true
 
+# Package and publish the static portfolio.
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
+    # Read the source and configure Pages before packaging the site.
+    permissions:
+      contents: read
+      pages: write
     runs-on: ubuntu-latest
     steps:
+      # Check out the repository files for packaging.
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
+      # Configure GitHub Pages and create its site if it is not enabled yet.
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
         with:
           enablement: true
 
+      # Upload the site in its own job so the artifact is registered before deployment.
       - name: Upload site
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .
 
+  deploy:
+    # Wait for the upload job to finish before looking up its artifact.
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      # Use the standard Pages environment and expose its site URL in Actions.
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Run the deployment step on a GitHub-hosted Linux runner.
+    runs-on: ubuntu-latest
+    steps:
+      # Publish the artifact to GitHub Pages.
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
